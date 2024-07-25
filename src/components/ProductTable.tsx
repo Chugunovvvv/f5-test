@@ -4,17 +4,24 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
 import GET_PRODUCTS from "../apollo/products";
 import { IProductsData } from "../types";
+import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { removeToken } from "../store/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const ProductTable: React.FC = () => {
+  const dispath = useDispatch();
+  const navigate = useNavigate();
   const { loading, error, data } = useQuery<IProductsData>(GET_PRODUCTS, {
     variables: {
       withArchived: false,
     },
   });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
+  const handleLogout = () => {
+    dispath(removeToken());
+    localStorage.removeItem("auth-token");
+    navigate("/", { replace: true });
+  };
   const columnDefs = [
     { headerName: "ID", field: "id", flex: 1 },
     { headerName: "Name", field: "name", flex: 1 },
@@ -27,16 +34,26 @@ const ProductTable: React.FC = () => {
     },
   ];
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
   return (
-    <div
-      className="ag-theme-alpine"
-      style={{
-        height: "95vh",
-        width: "100%",
-      }}
-    >
-      <AgGridReact rowData={data?.products || []} columnDefs={columnDefs} />
-    </div>
+    <>
+      <div className="ag-theme-alpine" style={{ marginBottom: "20px" }}>
+        <AgGridReact
+          rowData={data?.products || []}
+          columnDefs={columnDefs}
+          domLayout="autoHeight"
+        />
+      </div>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleLogout}
+        disabled={loading}
+      >
+        LogOut
+      </Button>
+    </>
   );
 };
 
