@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import LOGIN_MUTATION from "../apollo/login";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../store/authSlice";
 import { ILoginMutationData, ILoginMutationVars } from "../types";
+import { RootState } from "../store/store";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -16,6 +17,13 @@ const Login: React.FC = () => {
   >(LOGIN_MUTATION);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.auth.token);
+  useEffect(() => {
+    if (token) {
+      navigate("/", { replace: true });
+    }
+  }, [token, navigate]);
+
   const handleLogin = async () => {
     try {
       const { data } = await login({ variables: { email, password } });
