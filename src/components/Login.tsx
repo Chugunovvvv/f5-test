@@ -7,32 +7,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../store/authSlice";
 import { ILoginMutationData, ILoginMutationVars } from "../types";
 import { RootState } from "../store/store";
+import ErrorMessage from "./ErrorMessage";
 
 const Login: React.FC = () => {
+  // стейты для логина и пароля
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [login, { loading, error }] = useMutation<
+  const [isError, setIsError] = useState<string>("");
+  const [login, { loading }] = useMutation<
     ILoginMutationData,
     ILoginMutationVars
   >(LOGIN_MUTATION);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const token = useSelector((state: RootState) => state.auth.token);
+  // если токен есть, то направляем на главную страницу
   useEffect(() => {
     if (token) {
       navigate("/", { replace: true });
     }
   }, [token, navigate]);
 
+  // функция для обработки логина и пароля
   const handleLogin = async () => {
     try {
+      // выполняем мутацию с введенным логином и паролем
       const { data } = await login({ variables: { email, password } });
+      // если ответ содержит токен доступа, то записываем его в редакс и отправляем на главную страницу
       if (data && data.login.accessToken) {
         dispatch(setToken(data?.login.accessToken));
         navigate("/", { replace: true });
       }
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      setIsError(err.message);
     }
   };
 
@@ -56,6 +64,7 @@ const Login: React.FC = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      <ErrorMessage error={isError} />
       <Button
         variant="contained"
         color="primary"
@@ -64,7 +73,6 @@ const Login: React.FC = () => {
       >
         Login
       </Button>
-      {error && <Typography color="error">Error logging in</Typography>}
     </Container>
   );
 };

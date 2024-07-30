@@ -17,11 +17,14 @@ const ProductTable: React.FC = () => {
       withArchived: false,
     },
   });
+  // функция для выхода из аккаунта. Удаляем токен из стейта редакс и из локал сторедж
   const handleLogout = () => {
     dispath(removeToken());
     localStorage.removeItem("auth-token");
     navigate("/", { replace: true });
   };
+
+  // определяем колонки для таблицы
   const columnDefs = [
     { headerName: "ID", field: "id", flex: 1 },
     { headerName: "Name", field: "name", flex: 1 },

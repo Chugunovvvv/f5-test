@@ -13,13 +13,15 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setToken: (state, action: PayloadAction<string | null>) => {
-      state.token = action.payload;
+      state.token = action.payload; // ставим новое значение токена
       if (action.payload) {
+        // если ответ есть записываем в локал сторедж
         localStorage.setItem("auth-token", action.payload);
       } else {
         localStorage.removeItem("auth-token");
       }
     },
+    // удаляем токен
     removeToken: (state) => {
       state.token = null;
     },
