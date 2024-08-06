@@ -4,6 +4,7 @@ const GET_PRODUCTS = gql`
     products(withArchived: $withArchived) {
       id
       name
+      description
       minLimit
       process {
         name

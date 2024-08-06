@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
+import Print from "./pages/print";
 
 const App: React.FC = () => {
   const token = useSelector((state: RootState) => state.auth.token);
@@ -20,6 +21,14 @@ const App: React.FC = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/print"
+          element={
+            <PrivateRoute token={token}>
+              <Print />
+            </PrivateRoute>
+          }
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

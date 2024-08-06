@@ -7,7 +7,7 @@ import { IProductsData } from "../types";
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { removeToken } from "../store/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductTable: React.FC = () => {
   const dispath = useDispatch();
@@ -48,7 +48,9 @@ const ProductTable: React.FC = () => {
           domLayout="autoHeight"
         />
       </div>
+
       <Button
+        style={{ marginRight: "10px" }}
         variant="contained"
         color="primary"
         onClick={handleLogout}
@@ -56,6 +58,11 @@ const ProductTable: React.FC = () => {
       >
         LogOut
       </Button>
+      <Link to="/print">
+        <Button variant="contained" color="secondary">
+          print
+        </Button>
+      </Link>
     </>
   );
 };
