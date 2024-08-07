@@ -1,49 +1,46 @@
 import { type FC } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { useQuery } from "@apollo/client";
-import GET_DATA_FOR_PRINT from "../../../../apollo/print";
-const SpecificationTable: FC = () => {
-  const { loading, error, data } = useQuery(GET_DATA_FOR_PRINT, {
-    variables: {
-      id: 27005,
-    },
-  });
+import { OrderLineResponse } from "../../../../types";
 
-  const columnDefs = [
-    { headerName: "№", field: "№", width: 50 },
-    { headerName: "Операция", field: "name", flex: 1 },
-    { headerName: "Участок", field: "site", flex: 1 },
-    { headerName: "Время работы", field: "duration", flex: 1 },
-    { headerName: "Стоимость работы", field: "workPrice", flex: 1 },
-    { headerName: "Статус", field: "status", flex: 1 },
-  ];
+const SpecificationTable: FC<OrderLineResponse> = ({ data }) => {
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
 
-  // Преобразование graph из строки JSON в объект
-  const graphData = JSON.parse(data.orderLine.graph);
-  console.log(graphData);
+   const columnDefs = [
+      { headerName: "№", field: "№", width: 50 },
+      { headerName: "Название", field: "name", flex: 1 },
+      { headerName: "Факт/План", field: "quantity", flex: 1 },
+      { headerName: "Примечание", field: "description", flex: 1 },
+      { headerName: "Стоимость работы", field: "workPrice", flex: 1 },
+   ];
 
-  const rowData = graphData.map((item: any, index: number) => ({
-    "№": index + 1,
-    name: item.data.name,
-    site: item.label || "N/A",
-    duration: item.data.duration || "N/A", // Assuming description is present
-    workPrice: item.data.costPerHour || "N/A",
-  }));
 
-  console.log(rowData);
-  return (
-    <div className="ag-theme-alpine" style={{ width: "100%" }}>
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={columnDefs}
-        domLayout="autoHeight"
-      />
-    </div>
-  );
+
+   const rowData = data.orderLine.ingredients.map((ingredient, index) => ({
+
+
+      "№": index + 1,  // Уникальный номер
+      name: ingredient.sourceProduct.name || "N/A",
+      quantity: ingredient.quantity || "N/A",
+      workPrice: ingredient.sourseProduct?.actualPrice,
+      description: ingredient.notes
+   }));
+
+   return (
+
+
+      <div className="print__specification-table">
+         <h1 className="title-table">Спецификация</h1>
+         <div className="ag-theme-alpine" style={{ width: "100%" }}>
+            <AgGridReact
+               rowData={rowData}
+               columnDefs={columnDefs}
+               domLayout="autoHeight"
+            />
+         </div>
+
+      </div>
+   );
 };
 
 export default SpecificationTable;

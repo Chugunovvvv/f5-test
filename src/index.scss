@@ -20,3 +20,30 @@ body {
   font-weight: 600;
   margin-bottom: 15px;
 }
+/* Отображение в окне печати только страницы печати */
+// @media print {
+//    body>*:not(.printable) {
+//        display: none;
+//    }
+
+//    .printable {
+//        display: block;
+//       }
+//       @page {
+//          margin: 0mm;
+//       }
+// }
+
+/* Скрытие страницы печати на экране во время открытия модального окна печати*/
+// @media screen {
+//    .printable {
+//        display: none;
+//    }
+// }
+
+@media print {
+   @page {
+      margin: 0mm;
+
+   }
+}

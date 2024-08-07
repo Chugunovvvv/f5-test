@@ -4,6 +4,8 @@ const GET_DATA_FOR_PRINT = gql`
     orderLine(id: $id) {
       name
       status
+      quantity
+      description
       product {
         name
       }
@@ -21,8 +23,17 @@ const GET_DATA_FOR_PRINT = gql`
         notes
         sourceProduct {
           name
+          actualPrice
         }
       }
+        consumerReservations {
+        targetSalesOrderLine {
+        salesOrder {
+        name
+        }
+        }
+        }
+
       graph
     }
   }
