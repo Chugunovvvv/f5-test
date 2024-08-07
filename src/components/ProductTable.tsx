@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import Print from "../pages/print";
+import PrintButton from "./PrintButton";
 
 
 const ProductTable: React.FC = () => {
@@ -81,11 +82,10 @@ const ProductTable: React.FC = () => {
                   print
                </Button>
             </Link>
+            <PrintButton name={"Печать заказа!"}>
+               <Print />
+            </PrintButton>
 
-            <div style={{ display: 'none' }}>
-               <Print ref={componentRef} />
-            </div>
-            <button disabled={!componentRef.current} onClick={handlePrint}>Print this out!</button>
 
          </div>
 
