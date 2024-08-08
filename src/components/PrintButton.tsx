@@ -22,13 +22,7 @@ const PrintButton: React.FC<PrintPortalProps> = (({ children, name = "Печат
       content: () => printRef.current,
       documentTitle: 'Печать',
       // Стили для печати. Скрывает элементы с классом hidden
-      pageStyle: `
-        @media print {
-          .hidden {
-            display: block !important;
-          }
-        }
-      `,
+
 
    });
 

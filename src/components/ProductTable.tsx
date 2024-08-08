@@ -8,20 +8,15 @@ import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { removeToken } from "../store/authSlice";
 import { Link, useNavigate } from "react-router-dom";
-
-import { useRef, useState } from "react";
-import { useReactToPrint } from "react-to-print";
 import Print from "../pages/print";
 import PrintButton from "./PrintButton";
 
 
 const ProductTable: React.FC = () => {
-   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+
    const dispath = useDispatch();
-   const componentRef = useRef(null);
-   const handlePrint = useReactToPrint({
-      content: () => componentRef.current,
-   });
+
+
 
    const navigate = useNavigate();
    const { loading, error, data } = useQuery<IProductsData>(GET_PRODUCTS, {
@@ -52,9 +47,6 @@ const ProductTable: React.FC = () => {
    if (loading) return <p>Loading...</p>;
    if (error) return <p>Error: {error.message}</p>;
 
-
-
-
    return (
       <>
          <div className="container">
@@ -67,7 +59,6 @@ const ProductTable: React.FC = () => {
 
                />
             </div>
-
             <Button
                style={{ marginRight: "10px" }}
                variant="contained"
@@ -82,13 +73,10 @@ const ProductTable: React.FC = () => {
                   print
                </Button>
             </Link>
-            <PrintButton name={"Печать заказа!"}>
+            {/* <PrintButton name={"Распечатать"}>
                <Print />
-            </PrintButton>
-
-
+            </PrintButton> */}
          </div>
-
       </>
    );
 };

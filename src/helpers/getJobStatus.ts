@@ -8,7 +8,7 @@ export enum JobStateEnum {
 export function getJobStatusInRussian(state: string) {
    switch (state) {
       case JobStateEnum.WAITING:
-         return "Ожидает в очереди (нельзя приступить к выполнению)";
+         return "Ожидает в очереди";
       case JobStateEnum.AVAILABLE:
          return "Можно приступить к выполнению";
       case JobStateEnum.PAUSED:

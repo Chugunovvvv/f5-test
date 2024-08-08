@@ -3,12 +3,8 @@ import { type FC } from 'react'
 
 import SpecificationTable from './SpecificationTable'
 import ProcessTable from './ProcessTable'
-import { OrderLineResponse } from '../../../types'
 
-const Tables: FC<OrderLineResponse> = ({ data }) => {
-
-
-
+const Tables: FC = ({ data }) => {
    return (
       <div className='tables'>
          <SpecificationTable data={data} />

@@ -1,9 +1,12 @@
 import { type FC } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { OrderLineResponse } from "../../../../types";
 
-const SpecificationTable: FC<OrderLineResponse> = ({ data }) => {
+import './index.scss'
+
+import TotalInfo from "../../totalInfo";
+import { getTotalSpecificationCost } from "../../../../helpers/getTotalCostTable";
+const SpecificationTable: FC = ({ data }) => {
 
 
    const columnDefs = [
@@ -17,18 +20,14 @@ const SpecificationTable: FC<OrderLineResponse> = ({ data }) => {
 
 
    const rowData = data.orderLine.ingredients.map((ingredient, index) => ({
-
-
       "№": index + 1,  // Уникальный номер
       name: ingredient.sourceProduct.name || "N/A",
       quantity: ingredient.quantity || "N/A",
-      workPrice: ingredient.sourseProduct?.actualPrice,
+      workPrice: `${ingredient.sourceProduct?.actualPrice} ₽`,
       description: ingredient.notes
    }));
 
    return (
-
-
       <div className="print__specification-table">
          <h1 className="title-table">Спецификация</h1>
          <div className="ag-theme-alpine" style={{ width: "100%" }}>
@@ -38,7 +37,7 @@ const SpecificationTable: FC<OrderLineResponse> = ({ data }) => {
                domLayout="autoHeight"
             />
          </div>
-
+         <TotalInfo fontWeight='600' title='Итоговая стоимость' info={`${getTotalSpecificationCost(data)} ₽ `} />
       </div>
    );
 };

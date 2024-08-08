@@ -20,33 +20,24 @@ body {
   font-weight: 600;
   margin-bottom: 15px;
 }
-/* Отображение в окне печати только страницы печати */
-// @media print {
-//    body>*:not(.printable) {
-//        display: none;
-//    }
+.hidden {
+   display: none; 
+}
 
-//    .printable {
-//        display: block;
-//       }
-//       @page {
-//          margin: 0mm;
-//       }
-// }
-
-/* Скрытие страницы печати на экране во время открытия модального окна печати*/
-// @media screen {
-//    .printable {
-//        display: none;
-//    }
-// }
-
+.print-button {
+   padding: 10px 15px;
+   background-color: #1976d2;
+   color: #fff;
+   text-align: center;
+   border-radius: 10px;
+   font-size: 16px;
+}
 @media print {
    @page {
       margin: 0mm;
-
+     
    }
-}
-.hidden {
-   display: none;
+   .print-button {
+       display: none; 
+   }
 }

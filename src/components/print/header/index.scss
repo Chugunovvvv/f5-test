@@ -34,12 +34,10 @@
   }
 
   &__state {
-   p {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-
-   }
+     display: flex;
+     align-items: center;
+     gap: 7px;
+  
     span {
       font-weight: 600;
       font-size: 20px;

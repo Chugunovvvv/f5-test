@@ -1,0 +1,13 @@
+.process-table__totalDuration {
+   position: relative;
+   padding-bottom: 20px;
+   &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #f2f2f2;
+   }
+}
