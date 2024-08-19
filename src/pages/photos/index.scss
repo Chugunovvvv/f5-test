@@ -1,0 +1,21 @@
+.photos {
+  padding: 30px;
+  height: 100%;
+  &__title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 25px;
+  }
+
+  &__list {
+    // display: grid;
+    // grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+
+    height: 100%;
+  }
+}

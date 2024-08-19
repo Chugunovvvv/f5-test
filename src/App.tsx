@@ -5,6 +5,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import Print from "./pages/print";
+import Photos from "./pages/photos";
 
 const App: React.FC = () => {
   const token = useSelector((state: RootState) => state.auth.token);
@@ -26,6 +27,14 @@ const App: React.FC = () => {
           element={
             <PrivateRoute token={token}>
               <Print />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/photos"
+          element={
+            <PrivateRoute token={token}>
+              <Photos />
             </PrivateRoute>
           }
         ></Route>
